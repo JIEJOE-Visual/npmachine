@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imgs/icon.svg" type="image/x-icon">
+    <title>npmachine | 烦恼便签纸</title>
+    <style>
+        * {
+            font-size: 2vmin;
+            font-family: sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            background-color: #171717;
+            overflow: hidden;
+        }
+
+        .main {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #171717;
+        }
+
+        .container {
+            position: absolute;
+            width: 18rem;
+            height: 13.5rem;
+        }
+
+        .notepaper {
+            box-sizing: border-box;
+            position: absolute;
+            width: 18rem;
+            height: 13.5rem;
+            background-color: #17f700;
+            padding: 0 1rem;
+            border-radius: 0.2rem;
+            box-shadow: -0.1rem 0.1rem 0.6rem #17171782;
+            cursor: pointer;
+            font-size: 2vmin;
+            color: #171717;
+            font-weight: 500;
+            letter-spacing: 0.1rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .npmachine {
+            position: absolute;
+            width: 54rem;
+            pointer-events: none;
+        }
+
+        .npmachine_line_red {
+            fill: none;
+            stroke: #E51515;
+            stroke-width: 9;
+        }
+
+        .npmachine_line_white {
+            fill: none;
+            stroke: #f7f7f7;
+            stroke-width: 9;
+            stroke-dashoffset: 40;
+            stroke-dasharray: 40;
+            transition: 0.3s ease;
+        }
+
+        .npmachine_main_gear {
+            transform-origin: 387.89px 311.996px;
+            transition: 0.5s ease;
+        }
+
+        .npmachine_main_gear path:nth-child(1) {
+            fill: #A4CAB1;
+        }
+
+        .npmachine_main_gear path:nth-child(2) {
+            fill: #6F8475;
+        }
+
+        .time,
+        .time_line {
+            position: absolute;
+            font-size: 27rem;
+            font-weight: 900;
+            transform: translateY(-25%);
+            user-select: none;
+        }
+
+        .time_line {
+            color: #171717;
+            -webkit-text-stroke: 0.2rem #f7f7f7;
+        }
+
+        .time {
+            color: #f7f7f7;
+            clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+            transition: 0.5s ease 0.1s;
+        }
+
+        .tip {
+            position: absolute;
+            bottom: 12%;
+            flex-direction: column;
+        }
+
+        .tip_ch {
+            font-size: 1.3rem;
+            color: #f7f7f7;
+            letter-spacing: 0.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .tip_eng {
+            font-size: 0.8rem;
+            color: #f7f7f7;
+            letter-spacing: 0.2rem;
+        }
+
+        .loading {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-color: #171717;
+            font-size: 5vmin;
+            color: #f7f7f7;
+            font-weight: 900;
+            letter-spacing: 0.5rem;
+            transition: 0.6s ease;
+        }
+
+        .loading_hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        @media screen and (max-aspect-ratio: 7.25/5) {
+
+            .time,
+            .time_line {
+                font-size: 18rem;
+                transform: translateY(-35%);
+            }
+
+            .tip {
+                bottom: 20%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <svg class="npmachine npmachine_line" x=0 y=0 viewBox="0 0 1300 800">
+            <path class="npmachine_line_red"
+                  d="M903.9,483.3c0,0,166.2,45.4,125.6-67.9c-40.6-113.4,91.9-125.1,91.9-125.1" />
+            <path class="npmachine_line_white"
+                  d="M903.9,483.3c0,0,166.2,45.4,125.6-67.9c-40.6-113.4,91.9-125.1,91.9-125.1" />
+        </svg>
+        <p class="time_line">2024</p>
+        <p class="time">2024</p>
+        <svg class="npmachine npmachine_main" x=0 y=0 viewBox="0 0 1300 800">
+            <g class="npmachine_main_gear">
+                <path
+                      d="M447.6,312c0-3.6-0.3-7.1-0.9-10.5l27.3-15.8l-20.2-35l-27.3,15.8c-5.4-4.5-11.5-8.1-18.3-10.6v-31.5h-40.5
+                v31.5c-6.7,2.4-12.9,6-18.3,10.6l-27.3-15.8l-20.2,35l27.3,15.8c-0.6,3.4-0.9,6.9-0.9,10.5s0.3,7.1,0.9,10.6l-27.3,15.8l20.2,35
+                l27.3-15.8c5.4,4.5,11.5,8.1,18.3,10.6v31.5h40.5v-31.5c6.7-2.4,12.9-6,18.3-10.6l27.3,15.8l20.2-35l-27.3-15.8
+                C447.2,319.1,447.6,315.6,447.6,312z M422.1,316.1c-1.1,9.6-6.2,17.9-13.5,23.5c-2.2,1.6-4.6,3-7.1,4.1c-4.2,1.8-8.7,2.8-13.6,2.8
+                c-4.8,0-9.4-1-13.5-2.8c-2.5-1.1-4.9-2.5-7.1-4.1c-7.3-5.5-12.4-13.9-13.5-23.5c-0.2-1.3-0.2-2.7-0.2-4.1s0.1-2.8,0.2-4.1
+                c1.1-9.6,6.2-17.9,13.5-23.5c2.2-1.6,4.6-3,7.1-4.1c4.2-1.8,8.7-2.8,13.5-2.8s9.4,1,13.6,2.8c2.5,1.1,4.9,2.5,7.1,4.1
+                c7.3,5.5,12.4,13.9,13.5,23.5c0.2,1.3,0.2,2.7,0.2,4.1C422.3,313.4,422.2,314.8,422.1,316.1z" />
+                <path d="M422.1,307.9c-1.1-9.6-6.2-17.9-13.5-23.5c-2.2-1.6-4.6-3-7.1-4.1c-4.2-1.8-8.7-2.8-13.6-2.8
+                c-4.8,0-9.4,1-13.5,2.8c-2.5,1.1-4.9,2.5-7.1,4.1c-7.3,5.5-12.4,13.9-13.5,23.5c-0.2,1.3-0.2,2.7-0.2,4.1s0.1,2.8,0.2,4.1
+                c1.1,9.6,6.2,17.9,13.5,23.5c2.2,1.6,4.6,3,7.1,4.1c4.2,1.8,8.7,2.8,13.5,2.8s9.4-1,13.6-2.8c2.5-1.1,4.9-2.5,7.1-4.1
+                c7.3-5.5,12.4-13.9,13.5-23.5c0.2-1.3,0.2-2.7,0.2-4.1C422.3,310.6,422.2,309.2,422.1,307.9z M411,314.8
+                c-0.8,6.5-4.2,12.2-9.2,15.9c-1.5,1.1-3.1,2-4.8,2.8c-2.8,1.2-5.9,1.9-9.2,1.9c-3.3,0-6.4-0.7-9.2-1.9c-1.7-0.7-3.3-1.7-4.8-2.8
+                c-5-3.7-8.4-9.4-9.2-15.9c-0.1-0.9-0.2-1.8-0.2-2.8c0-0.9,0.1-1.9,0.2-2.8c0.8-6.5,4.2-12.2,9.2-15.9c1.5-1.1,3.1-2,4.8-2.8
+                c2.8-1.2,5.9-1.9,9.2-1.9c3.3,0,6.4,0.7,9.2,1.9c1.7,0.7,3.3,1.7,4.8,2.8c5,3.7,8.4,9.4,9.2,15.9c0.1,0.9,0.2,1.8,0.2,2.8
+                C411.2,312.9,411.1,313.9,411,314.8z" />
+            </g>
+            <image width="1300" height="800"
+                   xlink:href="imgs/notepaper_block.svg" />
+        </svg>
+        <div class="container"></div>
+        <svg class="npmachine npmachine_coil" x=0 y=0 viewBox="0 0 1300 800">
+            <image width="1300" height="800"
+                   xlink:href="imgs/notepaper_coil.svg" />
+        </svg>
+        <div class="tip">
+            <p class="tip_ch">拖拽便签卡，丢掉烦恼，为2024充电！</p>
+            <p class="tip_eng">Drag the notepaper, drop your troubles, charge
+                for 2024!</p>
+        </div>
+    </div>
+    <div class="loading">LOADING</div>
+</body>
+<script>
+    let if_pmd = false;
+    let paper_index = 0;
+    let contents = [
+        "努力工作的mini:\n家里人催我去考研",
+        "名称被占用:\n家长给安排相亲对象",
+        "damn:\n没有足够的零用钱花",
+        "今天吃啥呀:\n不能再和她一起去深圳了",
+        "无敌小熊熊:\n今年考公上不了岸",
+        "jiejoe:\n今年的账号数据不好",
+        "komo:\n找不到心仪的她",
+        "123:\n老妈不要在逼着我结婚啦",
+        "不吃早餐会肚子疼:\n被朋友嘲笑没找到工作",
+        "玛卡巴卡轰:\n找不到心仪的她",
+        "jim无所畏惧:\n参军视力不够",
+        "布拉布拉:\n被公司优化，成无业游民",
+    ];
+    const notepaper = {
+        container: document.querySelector(".container"),
+        max_power: 10,
+        target_ele: {},
+        if_dragable: false,
+        if_in: false,
+        if_draged: false,
+        limit_distance: 0,
+        max_width: 0,
+        resize() {
+            this.max_width = innerHeight;
+            if (innerHeight < innerWidth) { this.max_width = innerWidth };
+        },
+        init() {
+            if (!if_pmd) {
+                window.addEventListener("mousedown", () => {
+                    if (this.if_in) { this.if_dragable = true; };
+                });
+                window.addEventListener("mouseup", () => {
+                    if (!this.if_draged && this.if_dragable) {
+                        this.target_ele.style.transition = '0.1s ease';
+                        this.target_ele.style.transform = ``;
+                    }
+                    this.if_dragable = false;
+
+                });
+                window.addEventListener("mousemove", () => {
+                    if (this.if_dragable) {
+                        this.move(event.clientX, event.clientY);
+                    };
+                });
+            } else {
+                window.addEventListener("touchstart", () => {
+                    if (this.if_in) { this.if_dragable = true; };
+                });
+                window.addEventListener("touchend", () => {
+                    if (!this.if_draged && this.if_dragable) {
+                        this.target_ele.style.transition = '0.1s ease';
+                        this.target_ele.style.transform = ``;
+                    }
+                    this.if_dragable = false;
+                    this.if_in = false;
+                });
+                window.addEventListener("touchmove", () => {
+                    if (this.if_dragable) {
+                        this.move(event.touches[0].pageX, event.touches[0].pageY);
+                    };
+                });
+            };
+        },
+        creat_paper() {
+            let ele = document.createElement("div");
+            ele.className = 'notepaper';
+            this.if_draged = false;
+            if (contents[paper_index] === undefined) {
+                ele.innerText = '我们的2024充满了power!\n希望今年的你没有烦恼!';
+                ele.style.cursor = 'auto';
+                ele.style.backgroundColor = '#f7f7f7';
+            }
+            else {
+                ele.innerText = contents[paper_index];
+                if (!if_pmd) {
+                    ele.onmouseenter = () => { this.if_in = true; };
+                    ele.onmouseleave = () => { this.if_in = false; };
+                }
+                else {
+                    ele.ontouchstart = () => { this.if_in = true; };
+                }
+                this.limit_distance = Math.random() * this.max_width / 4 + this.max_width / 4;
+                this.target_ele = ele;
+                paper_index++;
+            }
+            this.container.appendChild(ele);
+        },
+        move(x, y) {
+            let distance = Math.pow(y - innerHeight / 2, 2) + Math.pow(x - innerWidth / 2, 2);
+            distance = Math.sqrt(distance);
+            let move_x = (x - innerWidth / 2) / this.limit_distance * 5;
+            let move_y = (y - innerHeight / 2) / this.limit_distance * 5;
+            this.target_ele.style.transition = ``;
+            this.target_ele.style.transform = `translate(${move_x}px,${move_y}px)`
+            if (distance > this.limit_distance) {
+                this.if_draged = true;
+                this.if_dragable = false;
+                this.if_in = false;
+                this.target_ele.onmouseenter = '';
+                this.target_ele.onmouseleave = '';
+                this.target_ele.ontouchstart = '';
+                this.target_ele.style.transition = '0.1s ease-out';
+                this.target_ele.style.transform =
+                    `translate(${x - innerWidth / 2}px,${y - innerHeight / 2}px) rotate(${Math.random() * 90 - 45}deg)`;
+                this.target_ele.style.cursor = 'auto';
+                this.play_ani();
+                this.creat_paper();
+            };
+        },
+        play_ani() {
+            let nums = paper_index * 100 / this.max_power;
+            document.querySelector(".time").style.clipPath =
+                `polygon(0% 0%, ${nums}% 0%,  ${nums}% 100%, 0% 100%)`;
+            if (nums >= 100) { document.querySelector(".time").style.color = '#c10d0d' };
+            document.querySelector(".npmachine_main_gear").style.transform = `rotate(${paper_index * 90}deg)`;
+            document.querySelector(".npmachine_line_white").style.strokeDashoffset = -40 * paper_index;
+        }
+    };
+    window.addEventListener("load", () => {
+        if (navigator.userAgent.indexOf("iPhone") != -1 ||
+            navigator.userAgent.indexOf("iPad") != -1 ||
+            navigator.userAgent.indexOf("iPod") != -1 ||
+            navigator.userAgent.indexOf("Android") != -1
+        ) { if_pmd = true; }
+        let get_messages = new XMLHttpRequest();
+        let timer = setTimeout(() => {
+            notepaper.init();
+            notepaper.creat_paper();
+            document.querySelector(".loading").classList.add("loading_hidden");
+            get_messages.abort();
+        }, 3000);
+        get_messages.onreadystatechange = () => {
+            if (get_messages.readyState == 4 && get_messages.status == 200) {
+                clearTimeout(timer);
+                contents = JSON.parse(get_messages.responseText);
+                notepaper.init();
+                notepaper.creat_paper();
+                document.querySelector(".loading").classList.add("loading_hidden");
+            };
+        };
+        get_messages.open("GET", 'https://www.api.com', true);
+        get_messages.send();
+    })
+    notepaper.resize();
+    window.addEventListener("resize", notepaper.resize);
+</script>
+
+</html>
